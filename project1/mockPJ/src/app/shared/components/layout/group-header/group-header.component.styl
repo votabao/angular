@@ -1,0 +1,102 @@
+.banner
+  background-position center
+  background-size cover
+  height 250px
+  .row
+    bottom 15%
+    left 11%
+
+.upload-avatar.position-absolute 
+    width 178px
+
+.avatar
+  width 178px
+  border 5px solid white
+  height 161px
+  img, .image-preview
+    width 100%
+    height 100%
+  &:hover .upload-avatar
+    opacity 1
+    visibility visible
+
+.upload-cover
+  cursor pointer
+  right 5%
+  bottom 5%
+  width 50px
+  height 30px
+  &:hover 
+    background-color rgba(0,0,0,0.3)
+  form 
+    height 100%
+  input
+    opacity 0
+    width 100%
+    height 100%
+    z-index 1
+  &:hover i 
+    color #ffffff
+  i 
+    font-size 20px
+    z-index 0
+    left 50%
+    top 50%
+    transform translateX(-50%) translateY(-50%)
+
+h1,a
+  color white
+
+.infor.position-absolute
+  bottom 15%
+  left 35%
+
+h1
+  font-weight bold
+
+a.dropdown-toggle
+  border 0.5px solid #9da3a3
+  padding 3px 8px
+
+.dropdown-item
+  color black
+
+li.nav-item
+  padding 0 10px
+  font-size 18px
+
+a.nav-link
+  color #676767 !important
+  font-weight 500
+  font-size 17px
+
+.active, a.nav-linkhover
+  border-bottom 3px solid #8c8cd8
+
+.fa-camera
+  color #c0bfbf
+  position absolute
+  z-index 0
+  
+.upload-avatar
+  cursor pointer
+  bottom 0
+  left 0
+  height 40px
+  text-align center
+  background-color rgba(0, 0, 0, 0.3)
+  transition 0.3
+  opacity 0
+  visibility hiden
+  transition 0.3s
+  i
+    left 50%
+    bottom 35%
+    transform translateX(-50%)
+  input
+    width 100%
+    height 100%
+    outline-offset none
+    outline none
+    cursor pointer
+    opacity 0

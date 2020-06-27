@@ -1,0 +1,127 @@
+<div class="container main-form">
+  <nav ngbNav #nav="ngbNav" class="tablist">
+    <ng-container ngbNavItem>
+      <a class="tab-name" ngbNavLink>Existing Contents</a>
+      <ng-template ngbNavContent>
+        <div class="container list-approved-content">
+          <div class="row content-detail" *ngFor="let content of contents">
+            <div class="col-sm-4 left-content" [ngStyle]="backgroundContent">
+              <div class="top-left-content">
+                <span>{{content.done | CustomeStatus}}</span>
+              </div>
+              <div class="row main-left-content">
+                <div class="image col-sm-4">
+                  <img src={{content.avatar}} alt="">
+                </div>
+                <div class="content col-sm-8">
+                  <p>{{content.userName}}</p>
+                  <br>
+                  <p>Start: <span>{{content.startDate | date: 'dd-MM-yyyy'}}</span></p>
+                  <p>End: <span>{{content.endDate | date: 'dd-MM-yyyy'}}</span></p>
+                  <p>Level: <span>{{content.level}}</span></p>
+                </div>
+              </div>
+              <div *ngIf="memberRole.role === 'CAPTAIN'" class="bottom-left-content" (click)="openAtten(content.id)">
+                <p>Take Attendance</p>
+              </div>
+            </div>
+            <div class="col">
+              <div class="row top-right-content">
+                <h4 class="col-sm-10 content-title">
+                  {{content.title}}
+                </h4>
+                <div ngbDropdown>
+                  <i *ngIf="memberRole.role === 'CAPTAIN' || memberRole.role === 'MENTOR'" class="fa fa-ellipsis-h" ngbDropdownToggle></i>
+                  <div ngbDropdownMenu>
+                    <button ngbDropdownItem (click)="createEventForContent(content.id)">Create event for
+                      content</button>
+                    <button ngbDropdownItem (click)="open(content.id)">Edit</button>
+                    <button ngbDropdownItem (click)="deleteContent(content.id, content)" *ngIf="memberRole.role === 'CAPTAIN'">Delete</button>
+                  </div>
+                </div>
+              </div>
+              <hr class="col-sm-4">
+              <div class="detail-content">
+                <span [innerHTML]="content.content | safeHtml"></span>
+              </div>
+              <span *ngIf="content.content.length > 300" class="view-all"
+                (click)="openView(content.id, content)">...View
+                All</span>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ng-container>
+    <ng-container *ngIf="memberRole.role==='CAPTAIN' || memberRole.role==='MENTOR' || memberRole.role==='MEMBER'"
+      ngbNavItem>
+      <a class="tab-name" ngbNavLink>Add New Content</a>
+      <ng-template ngbNavContent>
+        <div class="form">
+          <div class="container form-detail">
+            <div class="row">
+              <div class="col-sm-6 group-form-input">
+                <div class="d-flex align-items-center justify-content-xl-between form-add">
+                  <input class="input-form pl-3" type="text" placeholder="Title" [(ngModel)]="dataContent.title"
+                    pattern="[\w,./_=?-]+" maxlength="64">
+                  <i class="fa fa-pencil"></i>
+                </div>
+              </div>
+              <div class="form-group col-sm-6 group-form-input level-opiions">
+                <div class="d-flex align-items-center justify-content-xl-between form-add">
+                  <select class="form-control" id="selectCourse" [(ngModel)]="dataContent.level" #level>
+                    <option value="" disabled selected>Level</option>
+                    <option>Beginner</option>
+                    <option>Intermediate</option>
+                    <option>Expert</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-sm-6 group-form-input">
+                <div class="form-add">
+                  <app-input-date [placeholder]="plStartDate" [date]="dataContent.startDate"
+                    [minDate]="dataContent.currentDate || dataContent.startDate"
+                    (changeDateEvent)="selectedDate($event, 'startDate')">
+                  </app-input-date>
+                </div>
+              </div>
+              <div class="col-sm-6 group-form-input">
+                <div class="form-add">
+
+                  <app-input-date [placeholder]="plEndDate" [date]="dataContent.endDate"
+                    [minDate]="dataContent.startDate || dataContent.currentDate"
+                    (changeDateEvent)="selectedDate($event, 'endDate')">
+                  </app-input-date>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <editor [init]="{base_url: '/tinymce',
+              suffix: '.min',
+              menubar: false,
+              plugins: [
+                      'advlist autolink lists link image charmap print preview anchor',
+                      'searchreplace visualblocks code fullscreen',
+                      'insertdatetime media table paste code help wordcount',
+                      'paste'
+                        ],
+              toolbar:
+                      'undo redo | formatselect | \
+                       alignleft aligncenter alignright alignjustify | \
+                       bullist numlist outdent indent | removeformat | \
+                      help | fontsizeselect | fontselect | \
+                       bold italic backcolor | paste ',
+
+              paste_webkit_styles: 'color font-size'
+                      }" #content [(ngModel)]="dataContent.content">
+              </editor>
+            </div>
+            <button type="button" class="btn btn-primary" (click)="createNewContent()">
+              Done
+            </button>
+          </div>
+        </div>
+      </ng-template>
+    </ng-container>
+  </nav>
+  <div [ngbNavOutlet]="nav" class="mt-2"></div>
+</div>

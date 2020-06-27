@@ -1,0 +1,37 @@
+<form [formGroup]="updateForm" (ngSubmit)="editGroup()" *ngIf="memberRole.role === 'CAPTAIN'">
+  <div class="container">
+    <div class="setting-group">
+      <div class="form-group row" id="title">
+        <label for="example-text-input" class="col-2 col-form-label">
+          Title:
+        </label>
+        <div class="col-10">
+          <input class="form-control" type="text" id="name" formControlName="name" [(ngModel)]="groupInfo.name"
+            maxlength="64" #name required>
+        </div>
+        <div *ngIf="updateForm.get('name').hasError('required') && updateForm.get('name').hasError('touched')"
+          class="alert alert-danger">Aaaa
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="example-email-input" class="col-2 col-form-label">
+          Description:
+        </label>
+        <div class="col-10">
+          <textarea class="form-control" type="text" id="example-email-input" formControlName="description"
+            [(ngModel)]="groupInfo.description" maxlength="255" rows="7" #description></textarea>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-10 offset-2">
+          <button class="btn btn-primary" *ngIf="memberRole.role === 'CAPTAIN'" type="submit" [disabled]="updateForm.get('name').hasError('required') ||
+          updateForm.get('description').hasError('required')">Edit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="text-center pt-5" *ngIf="memberRole.role !== 'CAPTAIN'">
+  <h3>You are not captain of this group!</h3>
+</div>

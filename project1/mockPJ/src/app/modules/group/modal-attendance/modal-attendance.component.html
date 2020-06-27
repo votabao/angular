@@ -1,0 +1,32 @@
+<div class="banner" [ngStyle]="backgroundContent">
+  <h4 class="text-center">Take Attendance</h4>
+</div>
+<div class="modal-body atten-body">
+  <form #attenForm="ngForm">
+    <div class="row atten" *ngFor="let member of attendance; let note = index">
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-3 text-center">
+            <img [src]="member.avatar" alt="image">
+          </div>
+          <div class="col-md-9">
+            <h5 id="name">{{member.fullname}}</h5>
+            <span>{{member.email}}</span>
+            <label class="checkbox-inline">
+              <input type="checkbox" [checked]="member.present"
+                (change)="member.present = !member.present"><strong class="pl-1">Present</strong>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div id="note">
+          <input type="text" [(ngModel)]="member.note" name="{{note}}" placeholder="Note..." class="text-center">
+        </div>
+      </div>
+    </div>
+    <div class="text-center">
+      <button type="submit" class="btn btn-outline-primary" (click)="AddAtten()">Submit</button>
+    </div>
+  </form>
+</div>

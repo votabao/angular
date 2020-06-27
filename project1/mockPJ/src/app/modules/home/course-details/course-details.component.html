@@ -1,0 +1,132 @@
+<main>
+  <app-banner [title]='title' [url]='bgUrl'></app-banner>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a [routerLink]="['/dashboard']">Home</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Course Details</li>
+    </ol>
+  </nav>
+  <div class="listCourse mt-4">
+    <h5 class="text-center">List Group</h5>
+  </div>
+  <ng-template #content let-myModal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Create New Group</h4>
+      <button type="button" class="close" aria-label="Close" (click)="myModal.dismiss()">
+        <span>&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form #form="ngForm" (ngSubmit)="createGroup(form.value)" novalidate>
+        <div class="form-group">
+          <label for="groupName">Your Group Name</label>
+          <input type="text" class="form-control" id="groupName" placeholder="Enter group name" name="name" ngModel
+            #name="ngModel" maxlength="64" required>
+          <small *ngIf="name?.errors?.required && name?.touched" class="text-danger">This is a required field</small>
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea class="form-control" id="description" rows="5" placeholder="Enter description" name="description"
+            ngModel #description="ngModel" maxlength="255" required></textarea>
+          <small *ngIf="description?.errors?.required && description?.touched" class="text-danger">This is a required
+            field</small>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label for="startDate">Start Date</label>
+              <div class="form-group">
+                <div class="input-group">
+                  <input class="form-control" id="startDate" placeholder="Pick a day" name="startDate" ngbDatepicker
+                    ngModel #startDate="ngModel" #start="ngbDatepicker" required readonly>
+                  <div class="input-group-append">
+                    <span class="input-group-text calendar" (click)="start.toggle()"><i
+                        class="fa fa-calendar"></i></span>
+                  </div>
+                </div>
+                <small *ngIf="startDate?.errors?.required && startDate?.touched" class="text-danger">This is a required
+                  field</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="float-right">
+          <button type="button" class="btn btn-dark mx-3" (click)="myModal.close()"><i
+              class="fa fa-times-circle mx-2"></i>Cancel</button>
+          <button type="submit" [disabled]="form.invalid" class="btn btn-success"><i class="fa fa-check mx-2"></i>Done
+            and Publish</button>
+        </div>
+      </form>
+    </div>
+  </ng-template>
+
+  <div class="list-group">
+    <ngb-accordion #acc="ngbAccordion" activeIds="ngb-panel-1">
+      <ngb-panel title="Group Coming Soon" type="success">
+        <ng-template *ngIf="groupComing" ngbPanelContent>
+          <div class="row">
+            <div *ngFor="let eachGroupComing of groupComing" class="col-10 col-lg-4 col-md-6 my-4">
+              <div class="card mx-auto card-group" style="width: 25rem">
+                <div class="card-body p-0">
+                  <h5 routerLink="/group/{{eachGroupComing.id}}/content" class="card-title p-3 bg-success">
+                    {{eachGroupComing.name}}</h5>
+                  <div class="card-text px-2 d-flex justify-content-between">
+                    <div class="d-flex flex-column mb-4">
+                      <span class="member my-3"><i class="fa fa-user mx-2"></i>Members:
+                        {{eachGroupComing.totalMember}}</span>
+                      <span class="event"><i class="fa fa-pencil mx-2"></i>Events: {{eachGroupComing.totalEvent}}</span>
+                    </div>
+                    <div class="d-flex flex-column mb-4">
+                      <span class="captain my-3"><i class="fa fa-star mx-2"></i>Captain:
+                        {{eachGroupComing.nameCaptain}}</span>
+                      <span class="start-date"><i
+                          class="fa fa-calendar mx-2"></i>{{eachGroupComing.startDate | date: dateFormat}}</span>
+                    </div>
+                  </div>
+                  <div class="card-footer" style="height: 10rem">
+                    <span class="description">{{eachGroupComing.description}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-panel>
+      <ngb-panel title="Group Running" type="primary">
+        <ng-template *ngIf="groupRunning" ngbPanelContent>
+          <div class="row">
+            <div *ngFor="let eachGroupRunning of groupRunning" class="col-10 col-lg-4 col-md-6 my-4">
+              <div class="card mx-auto card-group" style="width: 25rem">
+                <div class="card-body p-0">
+                  <h5 routerLink="/group/{{eachGroupRunning.id}}/content" class="card-title p-3 bg-primary">
+                    {{eachGroupRunning.name}}</h5>
+                  <div class="card-text px-2 d-flex justify-content-between">
+                    <div class="d-flex flex-column mb-4">
+                      <span class="member my-3"><i class="fa fa-user mx-2"></i>Members:
+                        {{eachGroupRunning.totalMember}}</span>
+                      <span class="event"><i class="fa fa-pencil mx-2"></i>Events:
+                        {{eachGroupRunning.totalEvent}}</span>
+                    </div>
+                    <div class="d-flex flex-column mb-4">
+                      <span class="captain my-3"><i class="fa fa-star mx-2"></i>Captain:
+                        {{eachGroupRunning.nameCaptain}}</span>
+                      <span class="start-date"><i
+                          class="fa fa-calendar mx-2"></i>{{eachGroupRunning.startDate | date: dateFormat}}</span>
+                    </div>
+                  </div>
+                  <div class="card-footer" style="height: 10rem">
+                    <span class="description">{{eachGroupRunning.description}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </ngb-panel>
+    </ngb-accordion>
+  </div>
+
+  <div class="d-flex justify-content-center py-4">
+    <button class="btn btn-primary btn-create-group" (click)="open(content)">Create Group</button>
+  </div>
+</main>

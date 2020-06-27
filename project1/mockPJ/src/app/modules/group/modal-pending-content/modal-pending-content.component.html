@@ -1,0 +1,33 @@
+<div class="modal-body">
+  <div class="top-content">
+    <div class="top-left-content">
+      <span>{{data.done | CustomeStatus}}</span>
+    </div>
+  </div>
+  <div class="container">
+    <div class="main-content">
+      <h4 class="content-title">
+        {{data.title}}
+      </h4>
+      <div class="row content">
+        <div class="col-md-4">
+          <p>Start: <span>{{data.startDate | date:'dd-MM-yyyy'}}</span></p>
+        </div>
+        <div class="col-md-4">
+          <p>End: <span>{{data.endDate | date:'dd-MM-yyyy'}}</span></p>
+        </div>
+        <div class="col-md-4">
+          <p>Level: <span>{{data.level}}</span></p>
+        </div>
+      </div>
+      <div class="user">
+        <img src={{data.author.user.avatar}} alt="image">
+        <span><strong>{{data.author.user.fullName}}</strong></span>
+      </div>
+    </div>
+    <div class="content-detail">
+      <span [innerHTML]="data.content"></span>
+    </div>
+    <span class="view-less" (click)="viewLess()">View Less</span>
+  </div>
+</div>

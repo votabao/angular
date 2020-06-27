@@ -1,0 +1,16 @@
+diff a/angular.json b/angular.json	(rejected hunks)
+@@ -45,11 +45,13 @@
+               "node_modules/ngx-toastr/toastr.css",
+               "node_modules/bootstrap/dist/css/bootstrap.min.css",
+               "src/styles.styl",
+-              "node_modules/font-awesome/css/font-awesome.css"
++              "node_modules/font-awesome/css/font-awesome.css",
++              "node_modules/fullcalendar/dist/fullcalendar.min.css"
+             ],
+             "scripts": [
+               "node_modules/jquery/dist/jquery.min.js",
+               "node_modules/popper.js/dist/umd/popper.min.js",
++              "node_modules/fullcalendar/dist/fullcalendar.min.js",
+               "node_modules/tinymce/tinymce.min.js"
+             ]
+           },

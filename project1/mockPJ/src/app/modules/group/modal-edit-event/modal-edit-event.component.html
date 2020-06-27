@@ -1,0 +1,145 @@
+<div *ngIf="editForm">
+  <div class="modal-header">
+    <h4 class="modal-title edit-form" id="modal-basic-title">Edit Event</h4>
+  </div>
+  <div class="modal-body">
+    <form #form="ngForm" novalidate>
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" class="form-control" id="titleDetail" placeholder="Title" name="title" #title="ngModel"
+          [(ngModel)]="data.title" maxlength="64" required>
+      </div>
+      <small *ngIf="title?.errors?.required && title?.touched" class="text-danger">This is a required
+        field</small>
+
+      <div class="form-group">
+        <label for="description">Content</label>
+        <textarea type="text" class="form-control" id="content" placeholder="Something about your event ..." ngModel
+          name="content" maxlength="255" [(ngModel)]="data.content"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="document">Document Link</label>
+        <textarea class="form-control" id="document" rows="2" placeholder="Document Link ..." name="link" ngModel
+          #documentLink="ngModel" maxlength="255" [(ngModel)]="data.document"
+          pattern="^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$"></textarea>
+        <small *ngIf="documentLink?.errors?.pattern" class="text-danger">Wrong URL</small>
+      </div>
+
+      <div class="form-group">
+        <label for="speaker">Speaker</label>
+        <input class="form-control" id="speaker" rows="5" placeholder="Speaker" name="speaker" #speaker="ngModel"
+          maxlength="32" [(ngModel)]="data.speaker">
+      </div>
+
+      <div class="row">
+        <div class="form-group col-12 col-sm-6">
+          <label for="timeStart">Start Time</label>
+          <div class="form-group">
+            <ngb-timepicker name="timeStart" [(ngModel)]="data.startTime" #timeStart="ngModel" required>
+            </ngb-timepicker>
+          </div>
+          <small *ngIf="timeStart?.errors?.required" class="text-danger">This field is required</small>
+        </div>
+        <div class="form-group col-12 col-sm-6">
+          <label for="duration">Duration</label>
+          <div class="form-group">
+            <div class="input-group">
+              <ngb-timepicker name="timeEnd" [(ngModel)]="data.endTime" #duration="ngModel" required></ngb-timepicker>
+            </div>
+            <small *ngIf="duration?.errors?.required" class="text-danger">This field is required</small>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark mx-3" (click)="closeForm()"><i
+            class="fa fa-times-circle mx-2"></i>Cancel</button>
+        <button type="button" class="btn btn-success" [disabled]="form.invalid" (click)="updateEvent()">Done</button>
+      </div>
+    </form>
+  </div>
+  <hr>
+</div>
+
+<div *ngIf="hideFormDetail">
+  <div class="modal-header d-flex header-detail">
+    <h4 class="modal-title" id="modal-basic-title">Event Detail</h4>
+    <div class="header-icon d-flex justify-content-xl-between">
+      <i *ngIf="memberRole.role === 'CAPTAIN'" class="fa fa-pencil" (click)="showEditForm()"></i>
+      <i *ngIf="memberRole.role === 'CAPTAIN'" class="fa fa-trash" (click)="deleteEvent(data.id)"></i>
+      <i *ngIf="memberRole.role === 'CAPTAIN'" class="fa fa-user" (click)="showAttendanceForm(data.id)"></i>
+      <i class="fa fa-times" (click)="closeForm()"></i>
+    </div>
+  </div>
+  <div class="modal-body">
+    <form #form="ngForm" novalidate>
+      <div class="form-group d-flex title-detail">
+        <input type="text" class="form-control" id="title" [(ngModel)]="data.title" name="title" readonly required>
+      </div>
+    </form>
+    <form #form="ngForm" novalidate>
+      <div class="form-group d-flex description-detail event-detail">
+        <i class="fa fa-info-circle icon"></i>
+        <textarea type="text" class="form-control detail" id="description" [(ngModel)]="data.content" name="description"
+          readonly required></textarea>
+      </div>
+    </form>
+    <form #form="ngForm" novalidate>
+      <div class="form-group d-flex link-detail event-detail">
+        <i class="fa fa-link icon"></i>
+        <input type="text" class="form-control detail" id="document-link" [(ngModel)]="data.document" name="link"
+          readonly required>
+      </div>
+    </form>
+    <form #form="ngForm" novalidate>
+      <div class="form-group d-flex speaker-detail event-detail">
+        <i class="fa fa-user icon"></i>
+        <input type="text" class="form-control detail" id="speaker" [(ngModel)]="data.speaker" name="speaker" readonly
+          required>
+      </div>
+    </form>
+    <form #form="ngForm" novalidate>
+      <div class="form-group d-flex start-date-detail event-detail">
+        <i class="fa fa-calendar icon"></i>
+        <input type="text" class="form-control detail" id="timeStart" [value]="data.startTime | CustomeTime"
+          name=" timeStart" readonly required>
+      </div>
+    </form>
+    <form #form="ngForm" novalidate>
+      <div class="form-group d-flex duration-detail event-detail">
+        <i class="fa fa-history icon"></i>
+        <input type="text" class="form-control detail" id="duration" [value]="data.endTime | CustomeDuration"
+          name="duration" readonly required>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="banner" *ngIf="showEventAttendance">
+  <div class="banner pt-3">
+    <h4 class="text-center mb-4">Take Attendance</h4>
+  </div>
+  <div class="modal-body atten-body pt-0">
+    <form #attenForm="ngForm">
+      <div class="row atten" *ngFor="let member of eventAttendance; let note = index">
+        <div class="col-md-3 text-center">
+          <img [src]="member.avatar" alt="image">
+        </div>
+        <div class="col-md-9 pl-0">
+          <h5 id="name">{{member.fullname}}</h5>
+          <span>{{member.email}}</span>
+          <div id="note row" class="pt-2">
+            <label class="checkbox-inline col-3 p-0">
+              <input type="checkbox" [checked]="member.present" (change)="member.present = !member.present"><strong
+                class="pl-1">Present</strong>
+            </label>
+            <input type="text" [(ngModel)]="member.note" name="{{note}}" placeholder="Note..." class="text-center col-9">
+          </div>
+        </div>
+      </div>
+      <div class="text-center">
+        <button type="submit" class="btn btn-outline-primary" (click)="AddAtten()">Submit</button>
+      </div>
+    </form>
+  </div>
+</div>

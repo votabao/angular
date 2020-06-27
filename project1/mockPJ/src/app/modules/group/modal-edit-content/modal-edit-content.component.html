@@ -1,0 +1,65 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Edit content:</h4>
+</div>
+<div class="modal-body">
+  <form #editForm="ngForm">
+    <div class="row">
+      <div class="form-group col-md-6">
+        <div class="input-group">
+          <input class="form-control" id="title" placeholder="Title" name="Title" [(ngModel)]="data.title"
+            #title="ngModel" maxlength="64" required>
+          <div class="input-group-append">
+            <span class="input-group-text"><i class="fa fa-pencil"></i></span>
+          </div>
+        </div>
+        <small *ngIf="title?.errors?.required && title?.touched" class="text-danger">This is a required
+          field</small>
+      </div>
+      <div class="form-group col-md-6">
+        <select class="form-control" id="Level" name="Level" [(ngModel)]="data.level" #Level="ngModel" required>
+          <option value="" disabled selected>Level</option>
+          <option>Beginner</option>
+          <option>Intermediate</option>
+          <option>Expert</option>
+        </select>
+        <small *ngIf="Level?.errors?.required && Level?.touched" class="text-danger">This is a required
+          field</small>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-6">
+        <span>Start Date</span>
+        <div class="input-group">
+          <input class="form-control" id="startDate" placeholder="Start Date" name="startDate" ngbDatepicker
+            [(ngModel)]="data.startDate" #startDate="ngModel" #start="ngbDatepicker" readonly required>
+          <div class="input-group-append">
+            <span class="input-group-text calendar" (click)="start.toggle()"><i class="fa fa-calendar"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="form-group col-md-6">
+        <span>End Date</span>
+        <div class="form-add">
+          <app-input-date [date]="data.endDate" [minDate]="data.startDate || data.currentDate"
+            (changeDateEvent)="selectedDate($event, 'endDate')">
+          </app-input-date>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <editor id="content" name="content" [(ngModel)]="data.content" #content="ngModel" required [apiKey]="apiKey"
+        [init]="{base_url: '/tinymce',
+          suffix: '.min',
+          plugins: 'lists advlist',
+          height: '350',
+          toolbar: 'undo redo | bold italic | bullist numlist outdent indent'}">
+      </editor>
+      <small *ngIf="content?.errors?.required && content?.touched" class="text-danger">This is a
+        required field</small>
+    </div>
+    <div class="text-center">
+      <button type=" button" class="btn btn-danger mx-2" (click)="closeModal()">Cancel</button>
+      <button type="submit" class="btn btn-primary" [disabled]="editForm.invalid" (click)="close()">Save</button>
+    </div>
+  </form>
+</div>

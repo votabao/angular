@@ -1,0 +1,13 @@
+<form (ngSubmit)="addUser(myForm.value)" [formGroup]="myForm" class="my-3">
+  <ng-multiselect-dropdown
+    [placeholder]="'Add member to this class'"
+    [data]="users"
+    formControlName="email"
+    [disabled]="disabled"
+    [settings]="dropdownSettings"
+    [(ngModel)]="selectedItems">
+  </ng-multiselect-dropdown>
+  <button class="btn btn-primary ml-2" type="submit" [disabled]="myForm.invalid || memberRole.role === 'NO_MEMBER'"><i class="fa fa-plus"></i></button>
+</form>
+
+

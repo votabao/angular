@@ -1,0 +1,103 @@
+<div class="container main-form">
+  <nav ngbNav #nav="ngbNav" class="tablist">
+    <ng-container ngbNavItem>
+      <a class="tab-name" ngbNavLink>Attendance For Contents</a>
+      <ng-template ngbNavContent>
+        <div class="container list-approved-content">
+          <div class="row content-detail" *ngFor="let content of contents" (click)="onSelect(content)">
+            <div class="col-sm-4 left-content" [ngStyle]="backgroundContent">
+              <div class="top-left-content">
+                <span>{{content.done | CustomeStatus}}</span>
+              </div>
+              <div class="row main-left-content">
+                <div class="image col-sm-4">
+                  <img src={{content.avatar}} alt="">
+                </div>
+                <div class="content col-sm-8">
+                  <p>{{content.userName}}</p>
+                  <br>
+                  <p>Start: <span>{{content.startDate | date:'dd-MM-yyyy'}}</span></p>
+                  <p>End: <span>{{content.endDate | date:'dd-MM-yyyy'}}</span></p>
+                  <p>Level: <span>{{content.level}}</span></p>
+                </div>
+              </div>
+              <div class="bottom-left-content" (click)="openAtten(content.id)">
+                <p>View Attendance</p>
+              </div>
+            </div>
+            <div class="col">
+              <div class="row top-right-content">
+                <h4 class="col-sm-10 content-title">
+                  {{content.title}}
+                </h4>
+              </div>
+              <hr class="col-sm-4">
+              <div class="detail-content">
+                <span [innerHTML]="content.content | safeHtml"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ng-container>
+    <ng-container ngbNavItem>
+      <a class="tab-name" ngbNavLink>Attendance For Event</a>
+      <!-- <ng-template ngbNavContent>
+        <div class="event-attendance mb-4" *ngFor="let eventAttend of eventsAttendance">
+          <div class="event border p-3">
+            <div class="title d-flex justify-content-between">
+              <h4>{{eventAttend.title}}</h4>
+              <i class="fa fa-user d-flex align-items-center" (click)="openAtendanceEventMember(eventAttend.id)"></i>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-4">
+                <div class="description"><strong>Document link:</strong> {{eventAttend.document}} </div>
+                <div class="description"><strong>Speaker:</strong> {{eventAttend.speaker}}</div>
+              </div>
+              <div class="col-4">
+                <div class="description"><strong>Start date:</strong> {{eventAttend?.startDate | CustomeDate}}</div>
+                <div class="description"><strong>Start time:</strong> {{eventAttend.startTime | CustomeTime}}</div>
+                <div class="description"> <strong>Duration:</strong> {{eventAttend.endTime | CustomeDuration}}</div>
+              </div>
+              <div class="col-4">
+                <div class="description"><strong>Description:</strong> {{eventAttend.description}} </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template> -->
+    
+      <ng-template ngbNavContent>
+        <div class="container list-approved-content event">
+          <div class="row content-detail"  *ngFor="let eventAttend of eventsAttendance">
+            <div class="col-4 pl-4" [ngStyle]="backgroundContent">
+              <div class="text-center pt-5">
+                <div class="content text-left">
+                  <p>Speaker: <span>{{eventAttend.speaker}}</span></p>
+                  <p>Start Date: <span>{{eventAttend?.startDate | CustomeDate}}</span></p>
+                  <p>Start time: <span>{{eventAttend.startTime | CustomeTime}}</span></p>
+                  <p>Duration: <span>{{eventAttend.endTime | CustomeDuration}}</span></p>
+                  <div class="bottom-left-content mt-4" (click)="openAtendanceEventMember(eventAttend.id)">
+                    <p>View Attendance</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-8">
+              <div class="top-right-content">
+                <h4 class="content-title">
+                  {{eventAttend.title}}
+                </h4>
+              </div>
+              <hr class="col-sm-4">
+              <div class="document pt-4"><strong>Document link: </strong>{{eventAttend.document}}</div>
+              <div class="description pt-4"><strong>Description: </strong>{{eventAttend.description}} </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ng-container>
+  </nav>
+  <div [ngbNavOutlet]="nav" class="mt-2"></div>
+</div>

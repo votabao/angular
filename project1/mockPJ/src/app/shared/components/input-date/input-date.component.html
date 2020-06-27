@@ -1,0 +1,5 @@
+<div class="d-flex align-items-center justify-content-xl-between form-add">
+  <input class="form-control input-form" [placeholder]="placeholder" name="dp" [(ngModel)]="date" [minDate]="minDate"
+    ngbDatepicker #datePicker="ngbDatepicker" readonly [required]="required" (ngModelChange)="selectedDate($event)">
+  <span class="input-group-text calendar" (click)="datePicker.toggle()"><i class="fa fa-calendar"></i></span>
+</div>

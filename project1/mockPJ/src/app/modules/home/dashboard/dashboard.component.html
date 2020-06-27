@@ -1,0 +1,35 @@
+<main>
+  <app-banner [title]='title' [url]='bgUrl'></app-banner>
+  <div class="listCourse mt-4">
+    <h4 class="text-center">List Course</h4>
+    <div class="container text-center">
+      <div class="create-course text-left p-2 text-left" *ngIf="isLogin">
+        <button class="btn btn-primary" (click)="createCourse()">Create Course</button>
+      </div>
+      <ul class="d-flex flex-wrap">
+        <li class="col-md-6 col-xl-4 p-2" *ngFor="let course of courses">
+          <div class="course px-1">
+            <div class="course-name d-flex justify-content-between align-items-center">
+              <a class="col-10 text-left" (click)="accessDenied(course.id)">{{course.name}}</a>
+              <i class="fa fa-pencil col-2" (click)="open(course.id)"
+                *ngIf="isLogin && course.email === userEmail"></i>
+            </div>
+            <div class="inforCourse">
+              <div class="row flex-column px-4 mt-1 align-items-start">
+                <div class="author d-inline mb-1">
+                  <i class="fa fa-user"></i>
+                  <span>Author: {{course.username}}</span>
+                </div>
+                <div class="createdDate d-inline">
+                  <i class="fa fa-calendar"></i>
+                  <span>Created date: {{course.startDate | date: 'dd - MM - yyyy'}}</span>
+                </div>
+              </div>
+              <div class="description d-block text-left mt-1 px-2 pt-2">{{course.content}}</div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</main>

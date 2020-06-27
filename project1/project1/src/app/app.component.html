@@ -1,0 +1,53 @@
+<div class="container">
+  <nav>
+    <a routerLink="/TemplateDrivenFormsComponent">template-driven-forms</a>
+    <a routerLink="/dynamic-reactive-form">dynamic-reactive</a>
+    <a routerLink="/DOMAngular">DOMAngular</a>
+    <a routerLink="/custom-attribute-directive">custom-attribute-directive</a>
+    <a routerLink="/status-change">status-change</a>
+  </nav>
+  <p>{{title | slice:-9}}</p> <!-- lay tu cuoi về 9 ký tự-->
+
+  <h1>Project 1</h1>
+  <p>*NgSwitchCase Example!</p>
+  <select class="form-control col-2" (change)="onChangeTickets($event)">
+    <option value=""></option>
+    <option selected>1</option>
+    <option>2</option>
+    <option>3</option>
+  </select>
+  <div [ngSwitch]="tabIndex">
+    <div *ngSwitchCase="1">
+      <div>
+        Tab content 1
+      </div>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore, rerum.
+      </p>
+    </div>
+    <div *ngSwitchCase="2">
+      <div>
+        Tab content 2
+      </div>
+      <p>
+        Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth
+        master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro
+        keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat
+        salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.
+      </p>
+    </div>
+    <div *ngSwitchCase="3">
+      <div>
+        Tab content 3
+      </div>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus a sequi cupiditate accusantium vitae impedit
+        eum illo voluptatem neque, nisi.
+      </p>
+    </div>
+  </div>
+  <hr>
+  <router-outlet></router-outlet>
+  <app-child (countChanged)="countChangedHandler($event)"></app-child>`
+
+</div>

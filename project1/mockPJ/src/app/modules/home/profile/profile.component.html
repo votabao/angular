@@ -1,0 +1,67 @@
+<div class="row py-5 px-4">
+  <div class="col-8 mx-auto">
+    <div class="bg-white shadow rounded">
+
+      <div class="px-4 pt-0 pb-4 bg-dark">
+        <div class="media align-items-end profile-header">
+          <img src="{{user.avatar}}" alt="..." width="200" class="rounded mb-2 img-thumbnail">
+          <div class="media-body mb-5 text-white mx-3 d-flex justify-content-between">
+            <div>
+              <h4 class="mt-0 mb-0">{{user?.fullName}}</h4>
+              <p class="small mb-4"> <i class="fa fa-calendar mr-2"></i>Joined date:
+                {{user?.joinedDate | date: dateFormat}}</p>
+            </div>
+            <div>
+              <button class="btn btn-edit mb-4" (click)="openEditModal()">Edit Profile</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="py-4 px-4 my-5">
+        <p><strong>Birthday: </strong> {{user?.dateOfBirth | date: dateFormat}}</p>
+        <p><strong>Skype: </strong> {{user?.skype}}</p>
+        <p><strong>Email: </strong> {{user?.email}}</p>
+        <p><strong>Introduce: </strong>{{user?.introduce}}</p>
+        <div *ngIf="groupsFollow">
+          <p class="font-weight-bold">Joined groups history:</p>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Joined Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let groupFollow of groupsFollow;let order = index">
+                <td scope="row">{{order + 1}}</td>
+                <td>{{groupFollow?.name}}</td>
+                <td>{{groupFollow?.joinedDate}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div *ngIf="groupsLeft">
+          <p>Left groups history:</p>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Left Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let groupLeft of groupsLeft;let order = index">
+                <td scope="row">{{order + 1}}</td>
+                <td>{{groupLeft?.name}}</td>
+                <td>{{groupLeft?.joinedDate}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
