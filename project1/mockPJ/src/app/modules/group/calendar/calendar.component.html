@@ -1,0 +1,22 @@
+<div class="container">
+  <full-calendar #fullcalendar defaultView="dayGridMonth" [plugins]="calendarPlugins" [events]="calendarEvents"
+    eventLimit="6" (dateClick)="openCreateEvent($event)" [header]="options.header" [displayEventTime]="false"
+    (eventClick)="openEventDetail($event)">
+  </full-calendar>
+</div>
+<div class="history container">
+  <h3>HISTORY</h3>
+  <hr>
+  <div class="row">
+    <div class="col-12" *ngFor="let event of events">
+      <div class="startDate">{{event.startDate | date: dateFormat}}</div>
+      <div class="title text-info">
+        <h5>{{event.title}}</h5>
+      </div>
+      <div class="duration"><span class="font-weight-bold">Duration: </span>{{event.duration}} min</div>
+      <div class="speaker"><span class="font-weight-bold">Speaker: </span>{{event.speaker}}</div>
+      <div class="description">{{event.content}}</div>
+      <hr>
+    </div>
+  </div>
+</div>

@@ -1,10 +1,11 @@
 export class Content {
+  id: number;
   title: string;
   content: string;
   avatar: string;
-  startDate: Date;
-  endDate: Date;
+  startDate: object;
+  endDate: object;
   level: string;
   done: boolean;
-  username: string;
+  userName: string;
 }

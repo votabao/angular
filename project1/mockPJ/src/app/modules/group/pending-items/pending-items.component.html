@@ -1,20 +1,81 @@
-<div *ngIf="pendingMembers">
-    <div *ngFor="let pendingMember of pendingMembers" class="pending-users my-3 mx-2 d-flex">
-      <div class="pending-user-avatar">
-        <img [src]="pendingMember?.avatar" width="200px" height="100%" alt="">
-      </div>
-      <div class="pending-user-detail mx-2">
-        <h5 [class.captain]="pendingMember?.isCaptain" class="card-title">{{pendingMember?.name}}
-          <span *ngIf="pendingMember?.isCaptain"><i class="fa fa-star text-warning"></i></span>
-          <span *ngIf="pendingMember?.isMember"><i class="fa fa-user text-primary"></i></span>
-        </h5>
-        <p class="mb-0">Joined date: {{pendingMember?.joinedDate}}</p>
-        <p class="mb-0">Email: {{pendingMember?.email}}</p>
-        <p class="mb-0">Sky: {{pendingMember?.sky}}</p>
-      </div>
-      <div class="pending-user-button align-self-center float-right">
-        <button (click)="approve(pendingMember.id, pendingMember)" class="btn btn-outline-dark mx-3"><i class="fa fa-check mx-2 text-success"></i>Approve</button>
-        <button (click)="decline(pendingMember.id, pendingMember)" class="btn btn-outline-dark mx-3"><i class="fa fa-times-circle mx-2 text-danger"></i>Decline</button>
-      </div>
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <ul ngbNav #nav="ngbNav" class="nav-tabs">
+        <li ngbNavItem>
+          <a ngbNavLink>Pending Users</a>
+          <ng-template ngbNavContent>
+            <div *ngIf="pendingUsers" class="container">
+              <div *ngFor="let pendingMember of pendingUsers" class="pending-users my-3 mx-2 d-flex">
+                <div class="pending-user-avatar">
+                  <img [src]="pendingMember?.user.avatar" width="170x" height="100%" alt="">
+                </div>
+                <div class="pending-user-detail mx-2">
+                  <h5 [class.captain]="pendingMember?.caption" class="card-title">{{pendingMember?.user.fullName}}</h5>
+                  <p>Joined date: {{pendingMember?.joinedDate}}</p>
+                  <p>Email: {{pendingMember?.user.email}}</p>
+                  <p>Skype: {{pendingMember?.user.skype}}</p>
+                </div>
+                <div *ngIf="memberRole.role === 'CAPTAIN'" class="pending-user-button align-self-center float-right">
+                  <button (click)="approveUser(pendingMember.user.id, pendingMember)"
+                    class="btn btn-outline-dark mx-3"><i class="fa fa-check mx-2 text-success"></i>Approve</button>
+                  <button (click)="declineUser(pendingMember.user.id, pendingMember)"
+                    class="btn btn-outline-dark mx-3"><i
+                      class="fa fa-times-circle mx-2 text-danger"></i>Decline</button>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+        <li ngbNavItem>
+          <a ngbNavLink>Pending Contents</a>
+          <ng-template ngbNavContent>
+            <div *ngIf="pendingContents" class="container list-approved-content">
+              <div *ngFor="let pendingContent of pendingContents" class="row content-detail my-5">
+                <div class="col-sm-4 left-content">
+                  <div class="row main-left-content">
+                    <div class="image">
+                      <img src="{{coverUrl.coverImageUrl}}" alt="" width="225px" height="225px">
+                    </div>
+                    <div class="content text-white text-center">
+                      <div class="mt-5">
+                        <img class="rounded-circle" [src]="pendingContent.author.user.avatar" alt="" width="50px">
+                        <span>{{pendingContent.author.user.fullName}}</span>
+                      </div>
+                      <p class="mb-0">{{pendingContent.username}}</p>
+                      <br>
+                      <p class="mb-0">Start: {{pendingContent.startDate | date: dateFormat}}</p>
+                      <p class="mb-0">End: {{pendingContent.endDate | date: dateFormat}}</p>
+                      <p class="mb-0">Level: {{pendingContent.level}}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-8">
+                  <div class="row top-right-content">
+                    <h4 class="col-sm-10 content-title">
+                      {{pendingContent.title}}
+                    </h4>
+                  </div>
+                  <hr class="col-sm-4">
+                  <span [innerHTML]="pendingContent.content | safeHtml"></span>
+                  <span *ngIf="pendingContent.content.length > 300" class="view-all"
+                    (click)="openView(pendingContent.id)">...View
+                    All</span>
+                  <div *ngIf="memberRole.role === 'CAPTAIN'" class="my-3">
+                    <button (click)="approveContent(pendingContent.id, pendingContent)" class="btn btn-outline-dark"><i
+                        class="fa fa-check mx-2 text-success"></i>Approve</button>
+                    <button (click)="declineContent(pendingContent.id, pendingContent)"
+                      class="btn btn-outline-dark mx-3"><i
+                        class="fa fa-times-circle mx-2 text-danger"></i>Decline</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+      </ul>
     </div>
+  </div>
 </div>
+
+<div [ngbNavOutlet]="nav" class="mt-2"></div>

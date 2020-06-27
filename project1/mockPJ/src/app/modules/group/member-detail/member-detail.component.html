@@ -1,2 +1,60 @@
-<p>member-detail works!</p>
-{{memberID}}
+<div class="row py-5 px-4">
+  <div class="col-8 mx-auto">
+    <div class="bg-white shadow rounded">
+
+      <div class="px-4 pt-0 pb-4 bg-dark">
+        <div class="media align-items-end profile-header">
+          <div class="profile mr-3"><img [src]="member.avatar" alt="..." width="200" class="rounded mb-2 img-thumbnail">
+          </div>
+          <div class="media-body mb-5 text-white">
+            <h4 class="mt-0 mb-0">{{member.name}}</h4>
+            <p class="small mb-4"> <i class="fa fa-calendar mr-2"></i>Joined date:
+              {{member.joinedDate | date: dateFormat}}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="py-4 px-4 my-5">
+        <p>Birthday: {{member.dateOfBirth | date: dateFormat}}</p>
+        <p>Skype: {{member.skype}}</p>
+        <p>Email: {{member.email}}</p>
+        <p>Introduce: No introduce</p>
+        <div *ngIf="member.nameGroupFollowings">
+          <p>Joined courses history:</p>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let groupFollowing of member.nameGroupFollowings;let order = index">
+                <td scope="row">{{order + 1}}</td>
+                <td>{{groupFollowing.name}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div *ngIf="member.nameGroupHasLeft">
+          <p>Left groups history:</p>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let groupLeft of member.nameGroupHasLeft;let order = index">
+                <td scope="row">{{order + 1}}</td>
+                <td>{{groupLeft.name}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

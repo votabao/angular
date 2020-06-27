@@ -1,9 +1,9 @@
 <div class="card my-3" style="width: 15rem">
   <div class="card-body">
     <h5 class="text-capitalize font-weight-bold card-header">group information</h5>
-    <p class="px-3"><i class="fa fa-clock-o pr-2"></i>{{group?.startDate}}</p>
-    <p class="px-3"><i class="fa fa-star pr-2"></i>Captain: {{group?.captain}}</p>
-    <p class="px-3"><i class="fa fa-user pr-2"></i>Mentor: {{group?.mentor}}</p>
+    <p class="px-3"><i class="fa fa-clock-o pr-2"></i>{{group?.startDate | date: dateFormat}}</p>
+    <p class="px-3"><i class="fa fa-star pr-2"></i>Captain: {{group?.nameCaptain}}</p>
+    <p class="px-3"><i class="fa fa-user pr-2"></i>Mentor: {{group?.nameMentor}}</p>
     <p class="px-3"><i class="fa fa-users pr-2"></i>{{group?.totalMember}} members</p>
     <p class="px-3"><i class="fa fa-calendar pr-2"></i>{{group?.totalEvent}} events</p>
   </div>

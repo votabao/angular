@@ -5,43 +5,55 @@
       <ng-template ngbNavContent>
         <div class="container list-approved-content">
           <div class="row content-detail" *ngFor="let content of contents">
-            <div class="col-sm-4 left-content">
+            <div class="col-sm-4 left-content" [ngStyle]="backgroundContent">
               <div class="top-left-content">
-                <span>{{content.done}}</span>
+                <span>{{content.done | CustomeStatus}}</span>
               </div>
               <div class="row main-left-content">
                 <div class="image col-sm-4">
-                  <img src="../../../../assets/img/logo.png" alt="">
+                  <img src={{content.avatar}} alt="">
                 </div>
                 <div class="content col-sm-8">
-                  <p>{{content.username}}</p>
+                  <p>{{content.userName}}</p>
                   <br>
-                  <p>Start: <span>{{content.startDate}}</span></p>
-                  <p>End: <span>{{content.endDate}}</span></p>
+                  <p>Start: <span>{{content.startDate | date: 'dd-MM-yyyy'}}</span></p>
+                  <p>End: <span>{{content.endDate | date: 'dd-MM-yyyy'}}</span></p>
                   <p>Level: <span>{{content.level}}</span></p>
                 </div>
               </div>
-              <div class="bottom-left-content">
+              <div *ngIf="memberRole.role === 'CAPTAIN'" class="bottom-left-content" (click)="openAtten(content.id)">
                 <p>Take Attendance</p>
               </div>
             </div>
-            <div class="col-sm-8">
+            <div class="col">
               <div class="row top-right-content">
                 <h4 class="col-sm-10 content-title">
                   {{content.title}}
                 </h4>
-                <i class="fa fa-ellipsis-h"></i>
+                <div ngbDropdown>
+                  <i *ngIf="memberRole.role === 'CAPTAIN' || memberRole.role === 'MENTOR'" class="fa fa-ellipsis-h" ngbDropdownToggle></i>
+                  <div ngbDropdownMenu>
+                    <button ngbDropdownItem (click)="createEventForContent(content.id)">Create event for
+                      content</button>
+                    <button ngbDropdownItem (click)="open(content.id)">Edit</button>
+                    <button ngbDropdownItem (click)="deleteContent(content.id, content)" *ngIf="memberRole.role === 'CAPTAIN'">Delete</button>
+                  </div>
+                </div>
               </div>
               <hr class="col-sm-4">
-              <span [innerHTML]="content.content">
-              </span>
-              <!-- <span *ngIf="viewAllActive">View All</span> -->
+              <div class="detail-content">
+                <span [innerHTML]="content.content | safeHtml"></span>
+              </div>
+              <span *ngIf="content.content.length > 300" class="view-all"
+                (click)="openView(content.id, content)">...View
+                All</span>
             </div>
           </div>
         </div>
       </ng-template>
     </ng-container>
-    <ng-container ngbNavItem>
+    <ng-container *ngIf="memberRole.role==='CAPTAIN' || memberRole.role==='MENTOR' || memberRole.role==='MEMBER'"
+      ngbNavItem>
       <a class="tab-name" ngbNavLink>Add New Content</a>
       <ng-template ngbNavContent>
         <div class="form">
@@ -49,63 +61,63 @@
             <div class="row">
               <div class="col-sm-6 group-form-input">
                 <div class="d-flex align-items-center justify-content-xl-between form-add">
-                  <input class="input-form pl-3" type="text" placeholder="Title" ngModel #title="ngModel" required
-                    pattern="[\w,./_=?-]+" #title>
+                  <input class="input-form pl-3" type="text" placeholder="Title" [(ngModel)]="dataContent.title"
+                    pattern="[\w,./_=?-]+" maxlength="64">
                   <i class="fa fa-pencil"></i>
                 </div>
-                <small *ngIf="title?.errors?.required && title?.touched" class="text-danger">This is a required
-                  field</small>
-                <small *ngIf="title?.errors?.pattern" class="text-danger">White space</small>
               </div>
-
               <div class="form-group col-sm-6 group-form-input level-opiions">
                 <div class="d-flex align-items-center justify-content-xl-between form-add">
-                  <select class="form-control" id="selectCourse" name="course" ngModel #level="ngModel" required #level>
+                  <select class="form-control" id="selectCourse" [(ngModel)]="dataContent.level" #level>
                     <option value="" disabled selected>Level</option>
                     <option>Beginner</option>
-                    <option>Intermedise</option>
+                    <option>Intermediate</option>
                     <option>Expert</option>
                   </select>
                 </div>
-                <small *ngIf="level?.errors?.pattern && level?.touched" class="text-danger">This is a required
-                  field</small>
               </div>
-
               <div class="col-sm-6 group-form-input">
-                <div class="d-flex align-items-center justify-content-xl-between form-add">
-                  <input class="input-form pl-3" type="text" name="startDate" ngbDatepicker #startDate="ngModel"
-                    #startDatePicker="ngbDatepicker" placeholder="Start Date" ngModel readonly required #startDate>
-                  <span class="input-group-text calendar" (click)="startDatePicker.toggle()"><i
-                      class="fa fa-calendar"></i></span>
+                <div class="form-add">
+                  <app-input-date [placeholder]="plStartDate" [date]="dataContent.startDate"
+                    [minDate]="dataContent.currentDate || dataContent.startDate"
+                    (changeDateEvent)="selectedDate($event, 'startDate')">
+                  </app-input-date>
                 </div>
-                <small *ngIf="startDate?.errors?.required && startDate?.touched" class="text-danger">This is a required
-                  field</small>
               </div>
-
               <div class="col-sm-6 group-form-input">
-                <div class="d-flex align-items-center justify-content-xl-between form-add">
-                  <input class="input-form pl-3" type="text" name="endDate" ngbDatepicker ngModel #endDate="ngModel"
-                    #endDatePicker="ngbDatepicker" placeholder="End Date" readonly required #endDate>
-                  <span class="input-group-text calendar" (click)="endDatePicker.toggle()"><i
-                      class="fa fa-calendar"></i></span>
+                <div class="form-add">
+
+                  <app-input-date [placeholder]="plEndDate" [date]="dataContent.endDate"
+                    [minDate]="dataContent.startDate || dataContent.currentDate"
+                    (changeDateEvent)="selectedDate($event, 'endDate')">
+                  </app-input-date>
                 </div>
-                <small *ngIf="startDate?.errors?.required && startDate?.touched" class="text-danger">This is a required
-                  field</small>
               </div>
             </div>
             <div class="col-sm-12">
               <editor [init]="{base_url: '/tinymce',
-            suffix: '.min',
-            plugins: 'lists advlist',
-            toolbar: 'undo redo | bold italic | bullist numlist outdent indent'}" #description="ngModel" required
-                #content tagName="content" [(ngModel)]="bindingContent">
+              suffix: '.min',
+              menubar: false,
+              plugins: [
+                      'advlist autolink lists link image charmap print preview anchor',
+                      'searchreplace visualblocks code fullscreen',
+                      'insertdatetime media table paste code help wordcount',
+                      'paste'
+                        ],
+              toolbar:
+                      'undo redo | formatselect | \
+                       alignleft aligncenter alignright alignjustify | \
+                       bullist numlist outdent indent | removeformat | \
+                      help | fontsizeselect | fontselect | \
+                       bold italic backcolor | paste ',
+
+              paste_webkit_styles: 'color font-size'
+                      }" #content [(ngModel)]="dataContent.content">
               </editor>
-              <small *ngIf="description?.errors?.required && description?.touched" class="text-danger">This is a
-                required field</small>
             </div>
-            <button type="button" class="btn btn-outline-secondary">Cancel</button>
-            <button type="button" class="btn btn-primary"
-              (click)="createNewContent(title.value, bindingContent, startDate.value, endDate.value, level.value, title.value = '')">Done</button>
+            <button type="button" class="btn btn-primary" (click)="createNewContent()">
+              Done
+            </button>
           </div>
         </div>
       </ng-template>

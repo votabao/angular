@@ -1,0 +1,44 @@
+<form novalidate [formGroup]="editProfile" (ngSubmit)="uploadProfile()" class="row justify-content-md-center">
+  <div class="col-md-8">
+    <h5 class="text-center display-4">Edit Your Profile</h5>
+    <div class="form-group row">
+      <label for="name" class="col-2 col-form-label">Name:</label>
+      <div class="col-10">
+        <input class="form-control" type="text" id="name" formControlName="fullName">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="skype" class="col-2 col-form-label">Skype:</label>
+      <div class="col-10">
+        <input class="form-control" type="text" id="skype" formControlName="skype">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="birth-day" class="col-2 col-form-label">Birth Day:</label>
+      <div class="col-10">
+        <input class="form-control" type="date" id="birth-day" formControlName="dateOfBirth">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="introduce" class="col-2 col-form-label">Introduce:</label>
+      <div class="col-10">
+        <input class="form-control" type="text" id="introduce" formControlName="introduce">
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="avatar">
+        Change avatar: 
+        <input type="file" accept="image/*" id="avatar" name="avatar" (change)="onFileSelected($event)">
+      </label>
+    </div>
+    <div class="form-group row text-center">
+      <div class="col-10 offset-2">
+        <button class="btn btn-primary" type="submit" [disabled]="editProfile.get('fullName').hasError('required') &&
+          editProfile.get('skype').hasError('required') &&
+          editProfile.get('dateOfBirth').hasError('required') &&
+          editProfile.get('introduce').hasError('required')">
+          Edit</button>
+      </div>
+    </div>
+  </div>
+</form>

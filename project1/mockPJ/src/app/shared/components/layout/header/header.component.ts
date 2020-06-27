@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
-import { CommonService } from '../../../../core/services/common.service';
 import { AuthService, GoogleLoginProvider } from 'angularx-social-login';
 import { JoinedGroups } from '../../../../core/models/joined-groups';
 import { LoginService } from '../../../../core/services/login.service';
 import { GroupService } from '../../../../core/services/group.service';
+import { Router } from '@angular/router';
+import { CommonService } from 'src/app/core/services/common.service';
 
 @Component({
   selector: 'app-header',
@@ -19,10 +19,10 @@ export class HeaderComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private loginService: LoginService,
-    private service: CommonService,
     private groupService: GroupService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private service: CommonService
+  ) { }
 
   ngOnInit() {
     const user = localStorage.getItem('user');
@@ -40,11 +40,13 @@ export class HeaderComponent implements OnInit {
           .getToken({ email: user.email, idToken: user.idToken })
           .subscribe(
             response => {
-              location.reload();
+              this.loginService.showSuccess();
+              setTimeout(() => {
+                location.reload();
+              }, 500)
               localStorage.setItem('token', response.body.token);
               this.user = user;
               localStorage.setItem('user', JSON.stringify(user));
-              this.loginService.showSuccess();
             },
             () => {
               this.signOut();
@@ -56,17 +58,17 @@ export class HeaderComponent implements OnInit {
     });
   }
 
-  signOut(): void {
-    this.authService.signOut().then(() => {});
-    this.user = null;
-    localStorage.removeItem('user');
-    localStorage.removeItem('token');
-    this.router.navigate(['/dashboard']).then(() => location.reload());
+  signOut() {
+    this.loginService.signOut();   
   }
 
   getAllGroupsService(): void {
     this.groupService.getJoinedGroups().subscribe(groups => {
       this.groups = groups;
     });
+  }
+
+  onSelect(id) {
+    this.router.navigate([`/group/${id}/content`]).then(() => location.reload());
   }
 }

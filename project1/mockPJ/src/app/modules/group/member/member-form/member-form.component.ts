@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { MemberService } from '../../../../core/services/member.service';
 import { CommonService } from '../../../../core/services/common.service';
+import { User } from '../../../../core/models/user';
 
 @Component({
   selector: 'app-member-form',
@@ -11,10 +12,11 @@ import { CommonService } from '../../../../core/services/common.service';
   styleUrls: ['./member-form.component.styl']
 })
 export class MemberFormComponent implements OnInit {
-  @Input() groupID;
+  memberRole;
+  @Input() groupId;
   myForm: FormGroup;
   disabled = false;
-  members = [];
+  users;
   selectedItems;
   dropdownSettings: any = {};
 
@@ -30,26 +32,41 @@ export class MemberFormComponent implements OnInit {
       singleSelection: true,
       itemsShowLimit: 1,
       allowSearchFilter: true,
+      textField: 'email',
+      idField: 'id'
     };
 
-    this.members = [
-      'quan.bui1.intern@ntq-solotion.com.vn',
-      'bao.vo.intern@ntq-solotion.com.vn',
-      'sang.nguyen.intern@ntq-solotion.com.vn',
-      'tung.nguyen.intern@ntq-solotion.com.vn',
-      'hanh.kieu.intern@ntq-solotion.com.vn'
-    ];
+    this.memberService.refreshData.subscribe(() => {
+      this.getUserLoggedIn();
+    });
+    this.getUserLoggedIn();
 
     this.myForm = this.fb.group({
-      email: new FormControl(null, [Validators.required]),
+      email: new FormControl(null, [Validators.required])
+    });
+
+    this.getRole();
+  }
+
+  addUser(user) {
+    this.memberService.addUser(user, this.groupId).subscribe(() => {
+      this.service.showSuccessNotify(`Added success !`, `Success`);
+      this.selectedItems = [];
+      if (this.memberRole.role !== 'CAPTAIN') {
+        this.router.navigate([`group/${this.groupId}/pending-items`]).then(() => { });
+      }
     });
   }
 
-  addMember(member) {
-    this.memberService.createMember(member).subscribe(() => {
-      this.service.showSuccessNotify(`Added ${member.email[0]} success !`, `Success`);
-      this.selectedItems = [];
-      this.router.navigate([`group/${this.groupID}/pending-items`]).then(() => {});
+  getRole() {
+    this.memberService.getRole(this.groupId).subscribe(memberRole => {
+      this.memberRole = memberRole;
+    });
+  }
+
+  getUserLoggedIn() {
+    this.memberService.getUsersLoggedIn(this.groupId).subscribe((users: User[]) => {
+      this.users = users;
     });
   }
 

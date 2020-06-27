@@ -1,52 +1,62 @@
 <header>
-  <div class="banner position-relative">
-    <div class="row position-absolute">
+  <div class="banner position-relative" [ngStyle]="ngStyle">
+    <div class="upload-cover position-absolute" *ngIf="memberRole.role === 'CAPTAIN'">
+      <form class="position-relative" [formGroup]="uploadForm">
+        <input class="position-absolute" type="file" name="profile" accept="image/*"
+          (change)="uploadCoverImg($event)" />
+        <i class="fa fa-camera position-absolute"></i>
+      </form>
+    </div>
+    <div class="row position-absolute no-gutters">
       <div class="avatar">
         <div class="image-preview" *ngIf="imageURL && imageURL !== ''">
           <img [src]="imageURL" [alt]="uploadForm.value.name">
         </div>
-        <div class="upload-avatar position-absolute">
+        <div class="upload-avatar position-absolute" *ngIf="memberRole.role === 'CAPTAIN'">
           <i class="fa fa-camera"></i>
-          <input type="file" accept="image/*" (change)="showPreview($event)" />
+          <input type="file" accept="image/*" (change)="uploadAvatarImg($event)" #fileImg />
         </div>
       </div>
-      <div class="infor position-absolute">
+      <div class="infor justify-content-end d-flex flex-column ml-3">
         <div class="group-name mb-3">
-          <h1>JS 11</h1>
+          <h1>{{group?.name}}</h1>
         </div>
-        <div class="status" data-toggle="dropdown">
-          <a href="" class="dropdown-toggle">Joined</a>
-          <div class="dropdown-menu">
-            <a href="" class="btn btn-outline-secondary dropdown-item">Leave</a>
+        <div ngbDropdown class="d-inline-block">
+          <button class="btn btn-light" id="dropdownBasic1" ngbDropdownToggle *ngIf="showJoined">Joined</button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button ngbDropdownItem (click)="leaveGroup()">leave</button>
           </div>
+          <button class="btn btn-light" id="dropdownBasic1" *ngIf="showWantToLearn" (click)="joinGroup()">Want to learn
+            <i class="fa fa-plus text-success"></i></button>
+          <button class="btn btn-light" id="dropdownBasic1" *ngIf="showWaitting">Waitting</button>
         </div>
       </div>
     </div>
   </div>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-light">
+  <nav class="navbar navbar-expand-md navbar-dark bg-light">
     <button class="navbar-toggler bg-secondary" type="button" data-toggle="collapse" data-target="#navbarsExample08"
       aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class=" container collapse navbar-collapse justify-content-md-start" id="navbarsExample08">
+    <div class="container collapse navbar-collapse justify-content-center" id="navbarsExample08">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="[1, 'content']" routerLinkActive="active">Content</a>
+          <a class="nav-link" [routerLink]="[param, 'content']" routerLinkActive="active">Contents</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="[1, 'member']" routerLinkActive="active">Member</a>
+          <a class="nav-link" [routerLink]="[param, 'member']" routerLinkActive="active">Members</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="[1, 'attendance']" routerLinkActive="active">Attendance</a>
+          <a class="nav-link" [routerLink]="[param, 'attendance']" routerLinkActive="active">Attendance</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="[1, 'calender']" routerLinkActive="active">Calender</a>
+          <a class="nav-link" [routerLink]="[param, 'calendar']" routerLinkActive="active">Calendar</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="[1, 'pending-items']" routerLinkActive="active">Pending items</a>
+          <a class="nav-link" [routerLink]="[param, 'pending-items']" routerLinkActive="active">Pending items</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="[1, 'routePath']" routerLinkActive="active">Settings</a>
+          <a class="nav-link" [routerLink]="[param, 'setting']" routerLinkActive="active">Settings</a>
         </li>
       </ul>
     </div>

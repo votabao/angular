@@ -1,10 +1,13 @@
 export class Member {
-  id: number;
+  memberID: number;
   name: string;
+  fullName: string;
   joinedDate: string;
+  dateOfBirth: string;
   email: string;
-  sky: string;
+  skype: string;
   avatar: string;
-  isCaptain: boolean;
-  isMember: boolean;
+  nameGroupFollowings: null;
+  caption: boolean;
+  mentor: boolean;
 }

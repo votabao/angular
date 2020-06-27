@@ -1,27 +1,27 @@
 ul
   list-style none
 
-li 
+li
   padding 0 10px
 
-button 
-  background none 
+button
+  background none
   border none
 
 .btn.btn-dark.mx-3
-    background-color #23272B
+  background-color #23272B
 
 .btn.btn-success
-    background-color #218838
-    
-.listCourse ul li 
+  background-color #218838
+
+.listCourse ul li
   .course
     border 0.1px solid #949d9c
-    height 150px
+    min-height 200px
     font-size 13px
   i
-    padding 0 3px
-  a
+    padding 0 8px
+  .course-name
     font-weight bold
     color #3677B7
     font-size 18px
@@ -29,10 +29,24 @@ button
     border-bottom 0.1px solid #949d9c
     padding 3px 0
     outline none
-  a:hover
-    color #74ade6
+    overflow-wrap: break-word;
+    cursor pointer
+    a:hover
+    i:hover
+      color #74ade6
   .description
     border-top 0.1px solid #949d9c
+    overflow-wrap: break-word;
+    padding: 6px;
 
-.create-course button  
-    background-color #0069D9
+.create-course button
+  background-color #0069D9
+  
+a.col-10.text-left 
+  font-size 20px
+  
+.row.flex-column.px-4.mt-1.align-items-start 
+  font-size 14px
+
+.description.d-block.text-left.mt-1.px-2.pt-2 
+  font-size 14px

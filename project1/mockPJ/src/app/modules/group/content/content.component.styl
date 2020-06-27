@@ -7,9 +7,19 @@ input
   margin-top 20px
 
 .tablist
+  background-color #D7D7D7input
+  outline none
+
+.main-form
+  background-color white
+  box-shadow 0 3px 6px -4px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23)
+  margin-top 20px
+
+.tablist
   background-color #D7D7D7
   height 44px
-
+  outline none
+  
 .tab-name
   color black
 
@@ -45,6 +55,13 @@ input
 .form-detail
   margin-top 20px
 
+span.view-all
+  bottom 10px
+  right 30px
+  position absolute
+  cursor pointer
+  color #5287C8
+
 .form-add
   border 1px solid grey
   border-radius 5px
@@ -65,12 +82,19 @@ input
 
 .fa
   font-size 20px
+  position absolute
+  right -100px
   width 43px
+  cursor pointer
   text-align center
+  &:after
+    display none
+
+.calendar-add-form
+  border none
 
 span.input-group-text
   background none
-  border none
   cursor pointer
   width 43px
 
@@ -78,8 +102,13 @@ span.input-group-text
   margin 15px 15px 0 0
 
 .left-content
-  background-image linear-gradient(45deg, rgba(75, 117, 160, 0.6) 55%, rgba(45,95,93,0.7)), url('../../../../assets/img/content.jpg')
+  background-size cover
+  background-repeat none
   height 50vh
+
+.col-sm-4.left-content 
+  background-repeat no-repeat
+  background-size cover
 
 .top-left-content
   height 4vh
@@ -102,9 +131,14 @@ span.input-group-text
 
 .image img
   border-radius 50%
+  width 50px
   height 50px
   top 10vh
   left 25px
+
+.detail-content
+  text-align justify
+  margin-bottom 50px  
   
 p
   color white
@@ -117,11 +151,14 @@ p
   height 6vh
   border 1px solid white
   width 8rem
-  margin-left 50%
+  position: absolute;
+  left: 50%;
   transform translateX(-50%)
+  cursor pointer
   p
     text-align center
     margin-top 10px
+
 .btn
   margin-bottom 20px
 
@@ -135,3 +172,6 @@ p
 hr
   border none
   border-bottom 2px solid #5287C8
+
+.content p
+  font-size 18px

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 
 import { ToastrService } from 'ngx-toastr';
 import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
@@ -10,10 +9,10 @@ import { NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 export class CommonService {
 
   constructor(
-    private http: HttpClient,
     private toast: ToastrService,
     private config: NgbDatepickerConfig
-  ) { }
+  ) {
+  }
 
   showSuccessNotify(message, title) {
     return this.toast.success(message, title);
@@ -30,8 +29,7 @@ export class CommonService {
 
   disablePastDay() {
     const current = new Date();
-    this.config.minDate = { year: current.getFullYear(), month: current.getMonth() + 1, day: current.getDate() };
+    this.config.minDate = {year: current.getFullYear(), month: current.getMonth() + 1, day: current.getDate()};
     this.config.outsideDays = 'hidden';
   }
-
 }

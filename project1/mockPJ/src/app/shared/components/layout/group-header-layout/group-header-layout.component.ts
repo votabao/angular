@@ -9,6 +9,5 @@ export class GroupHeaderLayoutComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {}
-
+  ngOnInit() { }
 }

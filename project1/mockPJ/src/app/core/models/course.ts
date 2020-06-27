@@ -4,6 +4,7 @@ export class Course {
   name: string;
   startDate: Date;
   content: string;
+  email: string;
 }
 
 export class AddCourse {

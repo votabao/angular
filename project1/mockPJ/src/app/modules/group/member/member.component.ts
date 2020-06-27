@@ -11,20 +11,21 @@ import { GroupService } from '../../../core/services/group.service';
 })
 export class MemberComponent implements OnInit {
   group: Group;
-  groupID;
+  groupId;
+
   constructor(
     private groupService: GroupService,
     private route: ActivatedRoute
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      this.groupID = params.get('groupID');
+      this.groupId = params.get('groupID');
     });
 
-    this.groupService.getGroup().subscribe((group: Group) => {
+    this.groupService.getGroup(this.groupId).subscribe((group: Group) => {
       this.group = group;
     });
   }
-
 }

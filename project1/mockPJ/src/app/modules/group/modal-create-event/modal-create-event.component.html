@@ -1,0 +1,56 @@
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Create Event</h4>
+  </div>
+  <div class="modal-body">
+    <form #form="ngForm" (ngSubmit)="addEvent(form.value)" novalidate>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Title..." name="title" ngModel
+          #title="ngModel" maxlength="64" required>
+          <small *ngIf="title?.errors?.required && title?.touched" class="text-danger">This is a required
+            field</small>
+      </div>
+      <div class="form-group">
+        <textarea class="form-control" id="description" rows="2" placeholder="Something about your event..."
+          name="content" ngModel #description="ngModel" maxlength="255"></textarea>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" id="link" placeholder="Document Link..." name="link" ngModel
+          #link="ngModel"   pattern="^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$">
+          <small *ngIf="link?.errors?.pattern" class="text-danger">This is not a URL</small>
+      </div>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Speaker" name="speaker" ngModel
+          #speaker="ngModel" maxlength="32">
+          <small *ngIf="speaker?.errors?.required && speaker?.touched" class="text-danger">This is a required
+            field</small>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group">
+            <label>Start time</label>
+            <div class="input-group">
+              <ngb-timepicker name="startTime" ngModel #timeStart="ngModel" required></ngb-timepicker>
+            </div>
+          </div>
+          <small *ngIf="timeStart?.errors?.required && timeStart?.touched" class="text-danger">This is a required
+            field</small>
+        </div>
+        <div class="col-6">
+          <div class="form-group">
+            <label>Duration</label>
+            <div class="input-group">
+              <ngb-timepicker name="duration" ngModel #duration="ngModel" required></ngb-timepicker>
+            </div>
+          </div>
+          <small *ngIf="duration?.errors?.required && duration?.touched" class="text-danger">This is a required
+            field</small>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger mx-3" (click)="closeModalAddEvent()"><i
+            class="fa fa-times-circle mx-2"></i>Cancel</button>
+        <button type="submit" class="btn btn-success" [disabled]="form.invalid"><i
+            class="fa fa-check mx-2"></i>Add</button>
+      </div>
+    </form>
+  </div>

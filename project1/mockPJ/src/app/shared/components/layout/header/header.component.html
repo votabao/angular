@@ -12,8 +12,9 @@
                                 Following
                             </button>
                             <div ngbDropdownMenu class="dropdownListGroups">
-                                <a ngbDropdownItem *ngFor="let group of groups">
-                                    {{group.className}}
+                                <a ngbDropdownItem *ngFor="let group of groups" (click)="onSelect(group.id)"
+                                    routerLink="/group/{{group.id}}/content">
+                                    {{group.name}}
                                 </a>
                             </div>
                         </div>
@@ -24,12 +25,12 @@
                     <li><a id="login" *ngIf="!user" (click)="signIn('Google')">Login</a></li>
                     <li>
                         <div ngbDropdown *ngIf="user">
-                            <a ngbDropdownToggle class="show">
-                                <img src="{{ user.photoUrl }}">
+                            <a ngbDropdownToggle>
+                                <img src="{{ user.photoUrl }}" alt="">
                                 <span>{{ user.name }}</span>
                             </a>
-                            <div ngbDropdownMenu>
-                                <button ngbDropdownItem>View My Profile</button>
+                            <div ngbDropdownMenu class="actionUser">
+                                <button ngbDropdownItem [routerLink]="['/profile']">View My Profile</button>
                                 <a ngbDropdownItem (click)="signOut()" [routerLink]="['/dashboard']">Logout</a>
                             </div>
                         </div>

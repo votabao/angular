@@ -15,7 +15,6 @@ import { GroupService } from 'src/app/core/services/group.service';
   templateUrl: './course-details.component.html',
   styleUrls: ['./course-details.component.styl']
 })
-
 export class CourseDetailsComponent implements OnInit {
   dateFormat = CONFIG.dateFormat;
   @Input() course: Course;
@@ -45,17 +44,17 @@ export class CourseDetailsComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.courseID = params.get('id');
       this.groupService.getGroupsById(this.courseID).subscribe((matchGroup: Group[]) => {
-        for (let i = 0; i < matchGroup.length; i++) {
-          const getStartDate: any = new Date(new Date(matchGroup[i].startDate));
-          if (this.service.getCurrentDate() - getStartDate < 0) {
-            this.groupComing.push(matchGroup[i]);
-          } else if (this.service.getCurrentDate() - getStartDate >= 0) {
-            this.groupRunning.push(matchGroup[i]);
+          for (let i = 0; i < matchGroup.length; i++) {
+            const getStartDate: any = new Date(new Date(matchGroup[i].startDate));
+            if (this.service.getCurrentDate() - getStartDate < 0) {
+              this.groupComing.push(matchGroup[i]);
+            } else if (this.service.getCurrentDate() - getStartDate >= 0) {
+              this.groupRunning.push(matchGroup[i]);
+            }
           }
-        }
-        this.sortDate(this.groupComing);
-        this.sortDate(this.groupRunning);
-      });
+          this.sortDate(this.groupComing);
+          this.sortDate(this.groupRunning);
+        });
     });
   }
 
@@ -68,11 +67,12 @@ export class CourseDetailsComponent implements OnInit {
 
   createGroup(createdGroup: Group) {
     this.groupService.addGroup(createdGroup, this.courseID).subscribe(() => {
+      location.reload();
       this.service.showSuccessNotify(`${createdGroup.name} was created`, 'Success!');
+      location.reload();
       this.modalRef.close();
-    },
-      error => {
-        this.service.showErrorNotify(`Error ${error.statusText}`, 'Fail!');
+    }, error => {
+        this.service.showErrorNotify(`Error: ${createdGroup.name} has been existed`, 'Fail!');
       });
   }
 
@@ -82,4 +82,3 @@ export class CourseDetailsComponent implements OnInit {
     });
   }
 }
-
