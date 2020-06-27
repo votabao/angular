@@ -34,7 +34,7 @@
     "decode-html-entities": "^1.1.10",
     "font-awesome": "^4.7.0",
     "fullcalendar": "^3.10.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "lodash": "^4.17.15",
     "ng-multiselect-dropdown": "^0.2.10",
     "ngx-toastr": "^11.3.3",
