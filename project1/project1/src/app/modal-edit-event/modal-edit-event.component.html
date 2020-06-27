@@ -1,0 +1,24 @@
+<div class="modal-header">
+  <h4 class="modal-title" id="modal-basic-title">Edit Event</h4>
+
+  <button type="button" class="close" aria-label="Close" (click)="closeForm()">
+    <span>&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form #form="ngForm" (ngSubmit)="editEvent()" novalidate>
+    <div class="form-group">
+      <label for="title">title</label>
+      <input type="text" class="form-control" id="title" name="title"
+             ngModel #title="ngModel" maxlength="64" required [(ngModel)]="data.title">
+    </div>
+    <small *ngIf="title?.errors?.required && title?.touched" class="text-danger">This is a required
+      field</small>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-dark mx-3" (click)="closeForm()"><i
+        class="fa fa-times-circle mx-2"></i>Cancel</button>
+      <button type="submit" class="btn btn-success" [disabled]="form.invalid"><i
+        class="fa fa-check mx-2"></i>Save</button>
+    </div>
+  </form>
+</div>
