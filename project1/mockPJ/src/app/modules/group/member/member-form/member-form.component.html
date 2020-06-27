@@ -1,0 +1,13 @@
+<form (ngSubmit)="addMember(myForm.value)" [formGroup]="myForm" class="my-3">
+  <ng-multiselect-dropdown
+    [placeholder]="'Choose username...'"
+    [data]="members"
+    formControlName="email"
+    [disabled]="disabled"
+    [settings]="dropdownSettings"
+    [(ngModel)]="selectedItems">
+  </ng-multiselect-dropdown>
+  <button class="btn btn-primary ml-2" type="submit" [disabled]="myForm.invalid"><i class="fa fa-plus"></i></button>
+</form>
+
+

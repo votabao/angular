@@ -1,0 +1,20 @@
+<div *ngIf="pendingMembers">
+    <div *ngFor="let pendingMember of pendingMembers" class="pending-users my-3 mx-2 d-flex">
+      <div class="pending-user-avatar">
+        <img [src]="pendingMember?.avatar" width="200px" height="100%" alt="">
+      </div>
+      <div class="pending-user-detail mx-2">
+        <h5 [class.captain]="pendingMember?.isCaptain" class="card-title">{{pendingMember?.name}}
+          <span *ngIf="pendingMember?.isCaptain"><i class="fa fa-star text-warning"></i></span>
+          <span *ngIf="pendingMember?.isMember"><i class="fa fa-user text-primary"></i></span>
+        </h5>
+        <p class="mb-0">Joined date: {{pendingMember?.joinedDate}}</p>
+        <p class="mb-0">Email: {{pendingMember?.email}}</p>
+        <p class="mb-0">Sky: {{pendingMember?.sky}}</p>
+      </div>
+      <div class="pending-user-button align-self-center float-right">
+        <button (click)="approve(pendingMember.id, pendingMember)" class="btn btn-outline-dark mx-3"><i class="fa fa-check mx-2 text-success"></i>Approve</button>
+        <button (click)="decline(pendingMember.id, pendingMember)" class="btn btn-outline-dark mx-3"><i class="fa fa-times-circle mx-2 text-danger"></i>Decline</button>
+      </div>
+    </div>
+</div>

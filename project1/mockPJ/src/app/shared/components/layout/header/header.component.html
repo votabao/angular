@@ -1,0 +1,41 @@
+<header>
+    <nav>
+        <div class="container">
+            <div class="row justify-content-between align-items-center">
+                <div class="logo">
+                    <a [routerLink]="['/dashboard']"><img src="../../../../../assets/img/logo.png" alt=""></a>
+                </div>
+                <ul class=" d-flex align-items-center my-0">
+                    <li>
+                        <div ngbDropdown *ngIf="user">
+                            <button class="btn btn-outline-secondary btn-following" ngbDropdownToggle>
+                                Following
+                            </button>
+                            <div ngbDropdownMenu class="dropdownListGroups">
+                                <a ngbDropdownItem *ngFor="let group of groups">
+                                    {{group.className}}
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                    <li><a><span>Help</span></a></li>
+                    <li><a><span>Contact</span></a></li>
+                    <li><a><span>FAQ</span></a></li>
+                    <li><a id="login" *ngIf="!user" (click)="signIn('Google')">Login</a></li>
+                    <li>
+                        <div ngbDropdown *ngIf="user">
+                            <a ngbDropdownToggle class="show">
+                                <img src="{{ user.photoUrl }}">
+                                <span>{{ user.name }}</span>
+                            </a>
+                            <div ngbDropdownMenu>
+                                <button ngbDropdownItem>View My Profile</button>
+                                <a ngbDropdownItem (click)="signOut()" [routerLink]="['/dashboard']">Logout</a>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>

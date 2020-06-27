@@ -1,0 +1,23 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-9">
+      <app-member-list [groupID]="groupID"></app-member-list>
+    </div>
+    <div class="col-sm-3">
+      <div class="row">
+        <app-member-form [groupID]="groupID"></app-member-form>
+      </div>
+      <div class="row justify-content-center">
+        <app-member-calendar></app-member-calendar>
+      </div>
+      <div class="row justify-content-center">
+        <app-info-group [group]="group"></app-info-group>
+      </div>
+      <div class="row justify-content-center">
+        <app-important-document></app-important-document>
+      </div>
+    </div>
+  </div>
+</div>
+
+

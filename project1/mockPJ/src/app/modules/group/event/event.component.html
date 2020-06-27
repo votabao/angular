@@ -1,0 +1,73 @@
+<ng-template #edit let-myModal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Edit Event</h4>
+    <button type="button" class="close" aria-label="Close" (click)="myModal.dismiss()">
+      <span>&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #form="ngForm" (ngSubmit)="editEvent(form.value)" novalidate>
+      <div class="form-group">
+        <label for="courseName">Title</label>
+        <input type="text" class="form-control" id="courseName" placeholder="Enter course name" name="title" ngModel
+          #title="ngModel" maxlength="24" required>
+      </div>
+      <small *ngIf="title?.errors?.required && title?.touched" class="text-danger">This is a required
+        field</small>
+      <div class="form-group">
+        <label for="courseName">Description</label>
+        <textarea type="text" class="form-control" id="courseName" placeholder="Something about your event ..."
+          name="fullName" ngModel #name="ngModel" maxlength="20" required></textarea>
+      </div>
+      <small *ngIf="name?.errors?.required && name?.touched" class="text-danger">This is a required field</small>
+      <div class="form-group">
+        <label for="description">Document Link</label>
+        <input class="form-control" id="description" rows="5" placeholder="Document Link ..." name="content" ngModel
+          #documentLink="ngModel" maxlength="255" required>
+      </div>
+      <small *ngIf="documentLink?.errors?.required && documentLink?.touched" class="text-danger">This is a required
+        field</small>
+      <div class="form-group">
+        <label for="description">Speaker</label>
+        <input class="form-control" id="description" rows="5" placeholder="Speaker" name="content" ngModel
+          #speaker="ngModel" maxlength="255" required>
+      </div>
+      <small *ngIf="speaker?.errors?.required && speaker?.touched" class="text-danger">This is a required
+        field</small>
+      <div class="form-group">
+        <label for="startDate">Start Date</label>
+        <div class="form-group">
+          <div class="input-group">
+            <input class="form-control" id="startDate" placeholder="Pick a day" name="startDate" ngbDatepicker ngModel
+              #startDate="ngModel" #dateStart="ngbDatepicker" required readonly>
+            <div class="input-group-append">
+              <span class="input-group-text calendar" (click)="dateStart.toggle()"><i class="fa fa-calendar"></i></span>
+            </div>
+          </div>
+        </div>
+
+        <label for="endDate">End Date</label>
+        <div class="form-group">
+          <div class="input-group">
+            <input class="form-control" id="endDate" placeholder="Pick a day" name="endDate" ngbDatepicker ngModel
+              #endDate="ngModel" #dateEnd="ngbDatepicker" required readonly>
+            <div class="input-group-append">
+              <span class="input-group-text calendar" (click)="dateEnd.toggle()"><i class="fa fa-calendar"></i></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <small *ngIf="startDate?.errors?.required && startDate?.touched" class="text-danger">This is a required
+        field</small>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark mx-3" (click)="myModal.close()"><i
+            class="fa fa-times-circle mx-2"></i>Cancel</button>
+        <button type="submit" class="btn btn-success" [disabled]="form.invalid"><i
+            class="fa fa-check mx-2"></i>Done</button>
+      </div>
+    </form>
+  </div>
+</ng-template>
+<div class="create-course text-left p-2 text-left">
+  <button class="btn btn-primary" (click)="open(edit)">Edit Event</button>
+</div>

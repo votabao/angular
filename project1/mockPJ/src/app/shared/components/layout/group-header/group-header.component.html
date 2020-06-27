@@ -1,0 +1,54 @@
+<header>
+  <div class="banner position-relative">
+    <div class="row position-absolute">
+      <div class="avatar">
+        <div class="image-preview" *ngIf="imageURL && imageURL !== ''">
+          <img [src]="imageURL" [alt]="uploadForm.value.name">
+        </div>
+        <div class="upload-avatar position-absolute">
+          <i class="fa fa-camera"></i>
+          <input type="file" accept="image/*" (change)="showPreview($event)" />
+        </div>
+      </div>
+      <div class="infor position-absolute">
+        <div class="group-name mb-3">
+          <h1>JS 11</h1>
+        </div>
+        <div class="status" data-toggle="dropdown">
+          <a href="" class="dropdown-toggle">Joined</a>
+          <div class="dropdown-menu">
+            <a href="" class="btn btn-outline-secondary dropdown-item">Leave</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-light">
+    <button class="navbar-toggler bg-secondary" type="button" data-toggle="collapse" data-target="#navbarsExample08"
+      aria-controls="navbarsExample08" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class=" container collapse navbar-collapse justify-content-md-start" id="navbarsExample08">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="[1, 'content']" routerLinkActive="active">Content</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="[1, 'member']" routerLinkActive="active">Member</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="[1, 'attendance']" routerLinkActive="active">Attendance</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="[1, 'calender']" routerLinkActive="active">Calender</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="[1, 'pending-items']" routerLinkActive="active">Pending items</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="[1, 'routePath']" routerLinkActive="active">Settings</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>

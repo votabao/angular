@@ -1,0 +1,27 @@
+<div class="row justify-content-start">
+<div *ngFor="let member of members" class="member-list my-3 mx-2 d-flex" style="width: 34rem">
+  <div class="member-avatar">
+    <img [src]="member?.avatar" width="200px" height="100%" alt="">
+  </div>
+  <div class="member-detail mx-2">
+    <h5 routerLink="{{member.id}}" [class.captain]="member?.isCaptain" class="card-title">{{member?.name}}
+      <span *ngIf="member?.isCaptain"><i class="fa fa-star text-warning"></i></span>
+      <span *ngIf="member?.isMember"><i class="fa fa-user text-primary"></i></span>
+    </h5>
+    <p class="mb-0">Joined date: {{member?.joinedDate}}</p>
+    <p class="mb-0">Email: {{member?.email}}</p>
+    <p class="mb-0">Sky: {{member?.sky}}</p>
+    <div *ngIf="!member?.isCaptain" class="dropdown">
+      <div ngbDropdown class="d-inline-block">
+          <button class="toggle-button" id="dropdownBasic1" ngbDropdownToggle><i class="fa fa-ellipsis-h member-menu"></i></button>
+          <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+            <button (click)="deleteMember(member.id, member)" ngbDropdownItem>Remove</button>
+            <button ngbDropdownItem>Remove Mentor</button>
+            <button ngbDropdownItem>Set Captain</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
