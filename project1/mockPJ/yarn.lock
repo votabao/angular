@@ -2794,6 +2794,11 @@ decamelize@^1.2.0:
   resolved "https://registry.yarnpkg.com/decamelize/-/decamelize-1.2.0.tgz#f6534d15148269b20352e7bee26f501f9a191290"
   integrity sha1-9lNNFRSCabIDUue+4m9QH5oZEpA=
 
+decode-html-entities@^1.1.10:
+  version "1.1.10"
+  resolved "https://registry.yarnpkg.com/decode-html-entities/-/decode-html-entities-1.1.10.tgz#0e616b3ce64ecf2de999411e6eff982d3290d0c4"
+  integrity sha1-DmFrPOZOzy3pmUEebv+YLTKQ0MQ=
+
 decode-uri-component@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.0.tgz#eb3913333458775cb84cd1a1fae062106bb87545"
@@ -7400,10 +7405,10 @@ timers-browserify@^2.0.4:
   dependencies:
     setimmediate "^1.0.4"
 
-tinymce@^5.1.6:
-  version "5.2.0"
-  resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-5.2.0.tgz#e838640f61c8a936317bc27a5d2e16c297df3418"
-  integrity sha512-Q7KAu9sLB6TBhKFdb2LHPGy770zkSEjpN1VRqZ6pxNuVQ0mbGWgMocHDvM9XL9yJaOhFrJP6s9XM7zG2gapGpA==
+tinymce@^5.7.1:
+  version "5.7.1"
+  resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-5.7.1.tgz#658a6fb4c7d53a8496cc00f8da33f4b8290da06d"
+  integrity sha512-1gY8RClc734srSlkYwY0MQzmkS1j73PuPC+nYtNtrrQVPY9VNcZ4bOiRwzTbdjPPD8GOtv6BAk8Ww/H2RiqKpA==
 
 tmp@0.0.30:
   version "0.0.30"
